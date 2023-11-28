@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { ReactNode } from 'react';
-import Footer from '@/components/footer';
-import NavBar from '@/components/navBar';
+import Footer from '@/components/Footer';
+import NavBar from '@/components/NavBar';
 
 interface LayoutProps {
   children: ReactNode;
