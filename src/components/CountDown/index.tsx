@@ -12,18 +12,12 @@ const CountDown = (props: IProps) => {
   const [count, setCount] = useState(time || 60);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setCount((count) => {
-        if (count === 0) {
-          clearInterval(id);
-          onEnd && onEnd();
-          return count;
-        }
-        return count - 1;
-      });
-    }, 1000);
-    return () => clearInterval(id);
-  }, [time, onEnd]);
+    if (count === 0) {
+      onEnd && onEnd();
+      return;
+    }
+    setTimeout(() => setCount(count - 1), 1000);
+  }, [count]);
   return <div className={style.style}>{count}</div>;
 };
 export default CountDown;

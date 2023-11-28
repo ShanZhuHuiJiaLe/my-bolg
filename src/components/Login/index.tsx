@@ -33,7 +33,6 @@ const Login = (props: IProps) => {
    * 验证码倒计时结束
    */
   const handleCountDownEnd = useCallback(() => {
-    console.log('handleCountDownEnd触发了');
     setIsShowVerifyCode(false);
   }, []);
 
@@ -88,7 +87,7 @@ const Login = (props: IProps) => {
             />
             <span className={style.verifyCode} onClick={handleVerifyCode}>
               {isShowVerifyCode ? (
-                <CountDown time={1} onEnd={handleCountDownEnd} />
+                <CountDown time={10} onEnd={handleCountDownEnd} />
               ) : (
                 '获取验证码'
               )}
