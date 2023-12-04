@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState, useCallback } from 'react';
 import style from './index.module.scss';
 import CountDown from '../CountDown';
+import { message } from 'antd';
+import request from '@/service/fetch';
 
 interface IProps {
   isShow: boolean;
@@ -26,7 +28,22 @@ const Login = (props: IProps) => {
    * 获取验证码
    */
   const handleVerifyCode = () => {
-    setIsShowVerifyCode(true);
+    if (!form?.phone) {
+      return message.info('请填写手机号', 2);
+    }
+    // 路径就是文件名
+    request
+      .post('/api/user/sendVerifyCode', {
+        to: form?.phone,
+        templateId: 1,
+      })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          setIsShowVerifyCode(true);
+        } else {
+          message.error(res?.msg || '未知错误');
+        }
+      });
   };
 
   /**
