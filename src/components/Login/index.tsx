@@ -56,7 +56,16 @@ const Login = (props: IProps) => {
   /**
    * 登录
    */
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    request.post('/api/user/login', { ...form }).then((res: any) => {
+      if (res?.code === 0) {
+        // 登录成功
+        onClose && onClose();
+      } else {
+        message.error(res?.msg || '未知错误');
+      }
+    });
+  };
 
   /**
    * 使用github登录

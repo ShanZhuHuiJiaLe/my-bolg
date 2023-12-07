@@ -5,7 +5,7 @@ import { encode } from 'js-base64';
 import request from '@/service/fetch';
 import { withIronSessionApiRoute } from 'iron-session/next'; //在next中用来保存信息的
 import { ironOptions } from '../../../../config/index';
-import { ISession } from './index';
+import { ISession } from '../index';
 
 type Data = {
   code: number,
