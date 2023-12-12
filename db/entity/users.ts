@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 // primary column 主列
 // column 主列
@@ -6,7 +6,7 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 // 写个装饰器,name就是表名
 @Entity()
 export class Users {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   readonly id!: number;
 
   @Column()
@@ -19,5 +19,5 @@ export class Users {
   job!: string;
 
   @Column()
-  introduce!: number;
+  introduce!: string;
 }

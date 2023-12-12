@@ -57,14 +57,16 @@ const Login = (props: IProps) => {
    * 登录
    */
   const handleLogin = () => {
-    request.post('/api/user/login', { ...form }).then((res: any) => {
-      if (res?.code === 0) {
-        // 登录成功
-        onClose && onClose();
-      } else {
-        message.error(res?.msg || '未知错误');
-      }
-    });
+    request
+      .post('/api/user/login', { ...form, identity_type: 'phone' })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          // 登录成功
+          onClose && onClose();
+        } else {
+          message.error(res?.msg || '未知错误');
+        }
+      });
   };
 
   /**

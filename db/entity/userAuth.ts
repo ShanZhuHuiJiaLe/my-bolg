@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn,ManyToOne ,JoinColumn  } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,ManyToOne ,JoinColumn  } from 'typeorm';
 import {Users} from './users'
 
 // primary column 主列
@@ -8,13 +8,8 @@ import {Users} from './users'
 // 写个装饰器,name就是表名
 @Entity()
 export class User_auths {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   readonly id!: number;
-
-
-  @ManyToOne(() => Users)
-  @JoinColumn()
-  user_id!:Users
 
   @Column()
   identity_type!: string;
@@ -24,4 +19,11 @@ export class User_auths {
 
   @Column()
   credential!: string;
+
+  
+  @ManyToOne(() => Users,{
+    cascade: true
+  })
+  @JoinColumn({name:'user_id'})
+  users!:Users
 }
