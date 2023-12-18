@@ -5,12 +5,16 @@ import { navs } from './config';
 import Login from '../Login/index';
 import style from './index.module.scss';
 import { usePathname } from 'next/navigation';
-import { Button } from 'antd';
+import { Button, Dropdown, Avatar } from 'antd';
+import { LoginOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useStore } from '../../store/index';
 
 const NavBar: NextPage = () => {
   const [isShowLogin, setIsShowLogin] = useState(false);
   const pathname = usePathname();
+  const store = useStore();
+  const { userId, avatar } = store.user.userInfo;
 
   /**
    * 写文章
@@ -30,6 +34,36 @@ const NavBar: NextPage = () => {
   const handleClose = () => {
     setIsShowLogin(false);
   };
+
+  /**
+   * 个人主页
+   */
+  const handleGotoPersonalPage = () => {};
+
+  /**
+   * 退出登录
+   */
+  const handleLogout = () => {};
+
+  const items = [
+    {
+      key: '1',
+      label: (
+        <p onClick={handleGotoPersonalPage}>
+          <HomeOutlined />
+          &nbsp;个人主页
+        </p>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <p onClick={handleLogout}>
+          <LoginOutlined /> &nbsp;退出登录
+        </p>
+      ),
+    },
+  ];
   return (
     <div className={style.navbar}>
       <section className={style.logoArea}>BLOG</section>
@@ -44,9 +78,17 @@ const NavBar: NextPage = () => {
       </section>
       <section className={style.operationArea}>
         <Button onClick={handleGotoEditorPage}>写文章</Button>
-        <Button onClick={handleLogin} type="primary">
-          登录
-        </Button>
+        {userId ? (
+          <>
+            <Dropdown menu={{ items }} placement="bottomLeft">
+              <Avatar src={avatar} size={32} />
+            </Dropdown>
+          </>
+        ) : (
+          <Button type="primary" onClick={handleLogin}>
+            登录
+          </Button>
+        )}
       </section>
       {/* 登录组件 */}
       <Login isShow={isShowLogin} onClose={handleClose} />

@@ -3,6 +3,7 @@ import style from './index.module.scss';
 import CountDown from '../CountDown';
 import { message } from 'antd';
 import request from '@/service/fetch';
+import { useStore } from '../../store/index';
 
 interface IProps {
   isShow: boolean;
@@ -10,7 +11,7 @@ interface IProps {
 }
 const Login = (props: IProps) => {
   const { isShow = false, onClose } = props;
-
+  const store = useStore()
   const [form, setForm] = useState({
     phone: '',
     verify: '',
@@ -62,6 +63,8 @@ const Login = (props: IProps) => {
       .then((res: any) => {
         if (res?.code === 0) {
           // 登录成功
+          store.user.setUserInfo(res.data)
+          console.log(store,999)
           onClose && onClose();
         } else {
           message.error(res?.msg || '未知错误');
