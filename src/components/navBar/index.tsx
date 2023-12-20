@@ -9,6 +9,7 @@ import { Button, Dropdown, Avatar } from 'antd';
 import { LoginOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useStore } from '../../store/index';
+import { UserOutlined } from '@ant-design/icons';
 
 const NavBar: NextPage = () => {
   const [isShowLogin, setIsShowLogin] = useState(false);
@@ -81,7 +82,7 @@ const NavBar: NextPage = () => {
         {userId ? (
           <>
             <Dropdown menu={{ items }} placement="bottomLeft">
-              <Avatar src={avatar} size={32} />
+              <Avatar size={32} icon={<UserOutlined />} />
             </Dropdown>
           </>
         ) : (

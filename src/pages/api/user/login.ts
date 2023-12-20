@@ -4,6 +4,8 @@ import { ironOptions } from '../../../../config/index';
 import { prepareConnection } from '../../../../db/index';
 import { Users, User_auths } from '../../../../db/entity/index';
 import { ISession } from '../index';
+import { Cookie } from 'next-cookie';
+import { setCookie } from '@/utils';
 
 // 第一个传方法,第二个传配置项
 export default withIronSessionApiRoute(login, ironOptions);
@@ -14,13 +16,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
 
   const db = await prepareConnection();
   const userAuthRepo = db.getRepository(User_auths);
-  const userRepo = db.getRepository(Users);
-  console.log(
-    'All Users from the db: 01',
-    session,
-    // userAuthRepo.find(),
-    await userRepo.find()
-  );
+  const cookies = Cookie.fromApiRoute(req, res);
 
   if (String(session.verifyCode) === String(verify)) {
     // 验证码正确,在user_auths表中查找identity_type是否有记录
@@ -39,6 +35,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       session.nickname = nickname;
       session.avatar = avatar;
       await session.save();
+      setCookie(cookies, { id, nickname, avatar });
       res?.status(200).json({
         code: 0,
         msg: '登录成功',
@@ -71,6 +68,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       session.avatar = avatar;
       await session.save();
 
+      setCookie(cookies,{id, nickname, avatar})
       res?.status(200).json({
         code: 0,
         msg: '登录成功',
