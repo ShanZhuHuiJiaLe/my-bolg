@@ -17,13 +17,12 @@ const RootLayout = function ({ children }: { children: React.ReactNode }) {
   const initialValue = {
     user: {
       userInfo: {
-        userId: cookies().get('userId'),
-        nickname: cookies().get('nickname'),
-        avatar: cookies().get('avatar'),
+        userId: cookies().get('userId')?.value,
+        nickname: cookies().get('nickname')?.value,
+        avatar: cookies().get('avatar')?.value,
       },
     },
   };
-  console.log(initialValue,99988)
   return (
     <html lang="en">
       <body className={inter.className}>

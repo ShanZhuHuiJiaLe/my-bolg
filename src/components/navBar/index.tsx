@@ -10,6 +10,8 @@ import { LoginOutlined, HomeOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useStore } from '../../store/index';
 import { UserOutlined } from '@ant-design/icons';
+import request from '@/service/fetch';
+import { observer } from 'mobx-react-lite';
 
 const NavBar: NextPage = () => {
   const [isShowLogin, setIsShowLogin] = useState(false);
@@ -44,7 +46,13 @@ const NavBar: NextPage = () => {
   /**
    * 退出登录
    */
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    request.post('/api/user/logout').then((res: any) => {
+      if (res?.code === 0) {
+        store.user.setUserInfo({});
+      }
+    });
+  };
 
   const items = [
     {
@@ -97,4 +105,4 @@ const NavBar: NextPage = () => {
   );
 };
 
-export default NavBar;
+export default observer(NavBar);

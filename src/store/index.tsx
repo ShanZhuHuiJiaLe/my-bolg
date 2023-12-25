@@ -8,7 +8,7 @@ interface IProps {
   children: ReactElement;
 }
 
-enableStaticRendering(true); //表示是ssr项目
+enableStaticRendering(!process.browser); //浏览器环境为false,true表示是ssr项目
 
 const StoreContext = createContext({});
 
